@@ -213,6 +213,8 @@ $(document).ready(function () {
         s.src = 'https://nataliemeurer.disqus.com/embed.js';
         s.setAttribute('data-timestamp', +new Date());
         (d.head || d.body).appendChild(s);
+        // custom to remove heavy-handed comment footer
+        document.getElementsByClassName('disqus-footer')[0].remove()
     })();
 
     update();
