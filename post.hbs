@@ -51,15 +51,6 @@ into the {body} of the default.hbs template --}}
                 </div>
             </section>
 
-            {{!-- Email subscribe form at the bottom of the page --}}
-            {{#if @labs.subscribers}}
-            <section class="subscribe-form">
-                <h3 class="subscribe-form-title">Subscribe to {{@site.title}}</h3>
-                <p>Get the latest posts delivered right to your inbox</p>
-                {{subscribe_form placeholder="youremail@example.com"}}
-            </section>
-            {{/if}}
-
             <footer class="post-full-footer">
 
                 {{!-- There are two options for how we display the byline/author-info.
@@ -75,11 +66,18 @@ into the {body} of the default.hbs template --}}
 
             </footer>
 
-            {{!--
-            <section class="post-full-comments">
-                If you want to embed comments, this is a good place to do it!
+            {{!-- COMMENT THREAD FROM DISQUS--}}
+            <div id="disqus_thread"></div>
+            <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+            {{!-- Email subscribe form at the bottom of the page --}}
+            {{#if @labs.subscribers}}
+            <section class="subscribe-form">
+                <h3 class="subscribe-form-title">Subscribe to {{@site.title}}</h3>
+                <p>Get the latest posts delivered right to your inbox</p>
+                {{subscribe_form placeholder="youremail@example.com"}}
             </section>
-            --}}
+            {{/if}}
 
         </article>
 
@@ -203,6 +201,19 @@ $(document).ready(function () {
 
     window.addEventListener('scroll', onScroll, {passive: true});
     window.addEventListener('resize', onResize, false);
+
+            
+    var disqus_config = function () {
+        this.page.url = "{{url absolute="true"}}";  
+        this.page.identifier = "ghost-{{comment_id}}"
+    };
+    
+    (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = 'https://nataliemeurer.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
 
     update();
 
